@@ -34,14 +34,17 @@ def linear_regression_1D(input_array, target_array, epoch):
 
 ### pulling data function
 def get_data(): #use 'pandas' for just now
-    data_url="http://lib.stat.cmu.edu/datasets/boston"
-    raw_df=pd.read_csv(data_url, sep="\s+", skiprows=22, header=None)
-    input_array1=np.hstack([raw_df.values[::2, :],
-                   raw_df.values[1::2, :2]])
-    target_array = raw_df.values[1::2, 2] #제일 마지막 데이터=부동산 가격
-    feature_names = np.array(['CRIM', 'ZN', 'INDUS', 'CHAS', 'NOX',
-                          'RM', 'AGE', 'DIS', 'RAD', 'TAX', 'PTRATIO','B', 'LSTAT'])
-    input_array=input_array1[:,feature_names=='RM']
+    room_number_list, price_list = [], []
+
+    with open("BostonData1.txt", "r") as f:
+             for lines in f:
+                a = lines[0:5]
+                b = lines[5:10]
+                room_number_list.append(float(a.replace(" ", "")))
+                price_list.append(float(b.replace(" ", "")))
+
+    input_array = np.array(room_number_list)
+    target_array = np.array(price_list)
     return input_array, target_array
 # 
 def predict(input_array, weight, bias):
@@ -60,17 +63,17 @@ def lossfunction(diff_array):
 #여긴 수정 필요
 if __name__ == "__main__": 
     number_of_rooms, prices = get_data()
-    epoch = 1
+    epoch = 3000
 
     #print(number_of_rooms)
     print(prices)
     #print(len(number_of_rooms))
 
-    #weight, bias, loss = linear_regression_1D(number_of_rooms, prices, epoch)
+    weight, bias, loss = linear_regression_1D(number_of_rooms, prices, epoch)
 
     #
-    #plt.plot(number_of_rooms, prices, ".")
-    #plt.plot(number_of_rooms, predict(number_of_rooms, weight, bias), ".", label=f"loss: {loss}")
-    #plt.savefig("test.png")
+    plt.plot(number_of_rooms, prices, ".", label="target")
+    plt.plot(number_of_rooms, predict(number_of_rooms, weight, bias), ".", label="predict")
+    plt.savefig("test.png")
 
     #print(f"weight, bias, loss: {weight}, {bias}, {loss}")
