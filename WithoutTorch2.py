@@ -9,13 +9,13 @@ print("Step2: Development Multi Linear Regression Algorithm")
 
 def linear_regression_2D(input_array, target_array, epoch):
     #intialize weight & bias
-    weight, bias = np.array([[1],[1]]), 1 #2차원 열벡터, 스칼라
+    weight_bias = np.array([[1],[1],[1]]) #앞 2개=weight
     loss = 0 #initialize loss =0
     lr = 1e-3
-    print(f"initial : weight, bias, loss: {weight}, {bias}, {loss}")
+    print(f"initial : weight_bias, loss: {weight_bias}, {loss}")
 
     for i in range(0, epoch):
-        predict_array = predict(input_array, weight, bias)
+        predict_array = predict(input_array, weight_bias)
         #print(predict_array)
         diff_array = predict_array - target_array
         #print(diff_array)
@@ -23,8 +23,8 @@ def linear_regression_2D(input_array, target_array, epoch):
         #print(gradient_weight)
         gradient_bias = np.sum(2*diff_array) / len(diff_array)
         #print(gradient_bias)
-        weight -= (lr * gradient_weight)
-        bias -= (lr * gradient_bias)
+        weight_bias -= (lr * gradient_weight)
+        weight_bias -= (lr * gradient_bias)
         loss = lossfunction(diff_array)
         history=np.zeros((0,2))
         #accuracy(R^2 결정계수)
@@ -52,8 +52,8 @@ def get_data():
     return input_array, target_array
     
 
-def predict(input_array, weight, bias):
-    predict_array = weight.dot(input_array) + bias
+def predict(input_array, weight_bias):
+    predict_array = weight_bias@(input_array)
     return predict_array
 
 
