@@ -1,18 +1,16 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import random as rd
-import pandas as pd #잠깐 넣어둠
 
-print("Step1: Development Linear Regression Algorithm")
+print("Step1: Development Single Linear Regression Algorithm")
 
-# input_array, target_array will be 1-d array(1입력1출력 선형회귀)
+#input_array, target_array will be 1-d array
 #paramaters = weight, bias will be scalar
-#input_array=입력값=방개수, target_array=결과값=부동산가격, predict_array=출력값=입력값 넣어서 계산한
+#input_array=RM, target_array=MEDV, predict_array=예측한 출력값
 def linear_regression_1D(input_array, target_array, epoch):
     weight, bias = 0, 0 #intialize weight & bias = 0
     loss = 0 #initialize loss =0
     lr = 1e-4 #learning rate
-    print(f"Initial weight, bias, loss: {weight}, {bias}, {loss}")
+    print(f"initial weight, bias, loss: {weight}, {bias}, {loss}")
 
     for i in range(0, epoch):
         #print(input_array)
@@ -28,27 +26,30 @@ def linear_regression_1D(input_array, target_array, epoch):
         bias -= (lr * gradient_bias)
         loss = lossfunction(diff_array)
 
+    #record history
     
-    print(f"Final weight, bias, loss: {weight}, {bias}, {loss}")
+    
+    print(f"final weight, bias, loss: {weight:.4f}, {bias:.4f}, {loss:.4f}")
     return weight, bias, loss
 
 ### pulling data function
-def get_data(): #use 'pandas' for just now
-    room_number_list, price_list = [], []
+def get_data(): 
+    number_of_rooms_list, price_list = [], []
 
-    with open("BostonData1.txt", "r") as f:
-             for lines in f:
+    with open("BostonData1.txt", "r") as f: #read text file as 'read mode'
+             for lines in f: 
                 a = lines[0:5]
                 b = lines[5:10]
-                room_number_list.append(float(a.replace(" ", "")))
-                price_list.append(float(b.replace(" ", "")))
+                number_of_rooms_list.append(float(a.replace(" ", "")))
+                price_list.append(float(b.replace(" ", ""))) #still 'list'
 
-    input_array = np.array(room_number_list)
+    input_array = np.array(number_of_rooms_list) #행렬 형태로 변형
     target_array = np.array(price_list)
     return input_array, target_array
-# 
+
+
 def predict(input_array, weight, bias):
-    predict_array = weight*input_array + bias
+    predict_array = weight*(input_array) + bias
     return predict_array
 
 
@@ -57,10 +58,7 @@ def lossfunction(diff_array):
     return loss
 
 
-
-
-
-#여긴 수정 필요
+#
 if __name__ == "__main__": 
     number_of_rooms, prices = get_data()
     epoch = 3000
@@ -76,4 +74,7 @@ if __name__ == "__main__":
     plt.plot(number_of_rooms, predict(number_of_rooms, weight, bias), ".", label="predict")
     plt.savefig("test.png")
 
-    #print(f"weight, bias, loss: {weight}, {bias}, {loss}")
+#loss graph
+
+#accuracy graph 
+
