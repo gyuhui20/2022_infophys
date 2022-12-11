@@ -9,12 +9,13 @@ print("Step1: Development Single Linear Regression Algorithm")
 def linear_regression_1D(input_array, target_array, epoch):
     weight, bias = 1,1
     loss_list = []
-    lr = 1e-3
+    lr = 1e-4
     print(f"initial : weight, bias : {weight}, {bias}")
+    
     for i in range(0, epoch):
         #predict variable
         predict_array = predict(input_array, weight, bias)
-        #difference function(손실 함수)
+        #difference function(편차 함수)
         diff_array = predict_array - target_array
         #calculate gradients(경사 계산)
         gradient_weight = np.sum(2*input_array*diff_array) / len(diff_array) 
