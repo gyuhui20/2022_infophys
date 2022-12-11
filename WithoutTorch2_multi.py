@@ -11,7 +11,7 @@ print("Step2: Development Multi Linear Regression Algorithm")
 def linear_regression_2D(input_array, target_array, epoch):
     #intialize weight & bias
     weight, bias = np.ones(shape=(2,1)), np.ones(shape=(506,1))
-    loss = 0 #initialize loss =0
+    loss = []
     lr = 1e-3
     #print(f"initial : weight, bias, loss: {weight}, {bias}, {loss}")
 
@@ -27,15 +27,15 @@ def linear_regression_2D(input_array, target_array, epoch):
         #print(gradient_bias)
         weight[0,:] -= (lr * gradient_weight1)
         weight[1,:] -= (lr * gradient_weight2)
-        bias -= (lr * gradient_bias)
-        loss = lossfunction(diff_array)
+        bias[:,0] -= (lr * gradient_bias)
+        loss.append(lossfunction(diff_array))
         #accuracy(R^2 결정계수)
-        target_mean=target_array.mean()
-        acc=1-((target_array-predict_array)**2).sum()/((target_array-target_mean)**2).sum()
+        #target_mean=target_array.mean()
+        #acc=1-((target_array-predict_array)**2).sum()/((target_array-target_mean)**2).sum()
         #??gradient 초기화시키고 다시 위로 올라가서 시작 #0으로 만들어주고 반복하게끔
         print(bias[0][0])
         print(weight[1][0])
-        print(f"final : weight1, weight2, bias, loss: {weight[0][0]:.4f}, {weight[1][0]:.4f}, {bias[0][0]:.4f}, {loss:.4f}")
+        #print(f"final : weight1, weight2, bias, loss: {weight[0][0]:.4f}, {weight[1][0]:.4f}, {bias[0][0]:.4f}, {loss:.4f}")
         #print(f"acc : {acc:.4f}")
         return weight, bias, loss
     
@@ -72,7 +72,7 @@ if __name__ == "__main__": #인터프리터에서 직접 실행했을 경우에�
     print("*"*70)
     print(RM_CRIM.shape)
     print("*"*70)
-    #print(prices)
+    print(prices.shape)
     #print("*"*70)
     weight, bias, loss = linear_regression_2D(RM_CRIM, prices, epoch)
     #draw result graph
@@ -89,12 +89,12 @@ if __name__ == "__main__": #인터프리터에서 직접 실행했을 경우에�
     plt.title("x: Criminal, y: Price")
 
     plt.tight_layout()
-    plt.savefig("result1.png")
+    plt.savefig("LR_multi_scatter.png")
     
     #loss graph
     #plt.plot(history[:,0], history[:,1],'b')
     #plt.xlabel('epoch')
     #plt.ylabel('loss')
     #plt.title('learning graph(loss)')
-    #plt.savefig("loss graph.png")
+    #plt.savefig("LR_multi_lossgraph.png")
 

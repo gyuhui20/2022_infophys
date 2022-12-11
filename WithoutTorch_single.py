@@ -67,16 +67,16 @@ if __name__ == "__main__": #인터프리터에서 직접 실행했을 경우에�
     #draw result graph
     plt.plot(number_of_rooms, prices, ".", label="target")
     plt.plot(number_of_rooms, predict(number_of_rooms, weight, bias), ".", label="predict")
-    plt.savefig("result.png")
+    plt.savefig("LR_single_Scatter.png")
     #??100회마다 기록
     if (epoch%100 == 0) :
         history=np.vstack((history, np.array([epoch, loss.item()])))
         print(f'epoch : {epoch} / loss : {loss : .4f}')
     #lost list=[], 추가될 때마다 append를 해라.     
     
-#loss graph
-plt.plot(history[:,0], history[:,1],'b')
-plt.xlabel('epoch')
-plt.ylabel('loss')
-plt.title('learning graph(loss)')
-plt.savefig("loss graph.png")
+    #loss graph
+    plt.plot(history[:,0], history[:,1],'b')
+    plt.xlabel('epoch')
+    plt.ylabel('loss')
+    plt.title('learning graph(loss)')
+    plt.savefig("LR_single_lossgraph.png")
