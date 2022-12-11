@@ -60,7 +60,7 @@ history=np.zeros((0,2))
 #__name__ : interpreter 글로벌 변수 
 if __name__ == "__main__": #인터프리터에서 직접 실행했을 경우에만 if문을 실행해라(import 말고)
     number_of_rooms, prices = get_data()
-    epoch = 15000
+    epoch = 20000
     #print(number_of_rooms)
     #print(prices)
     weight, bias, loss = linear_regression_1D(number_of_rooms, prices, epoch)
@@ -72,7 +72,7 @@ if __name__ == "__main__": #인터프리터에서 직접 실행했을 경우에�
     if (epoch%100 == 0) :
         history=np.vstack((history, np.array([epoch, loss.item()])))
         print(f'epoch : {epoch} / loss : {loss : .4f}')
-        
+    #lost list=[], 추가될 때마다 append를 해라.     
     
 #loss graph
 plt.plot(history[:,0], history[:,1],'b')
