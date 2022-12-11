@@ -30,9 +30,8 @@ def linear_regression_1D(input_array, target_array, epoch):
         target_mean=target_array.mean()
         acc=1-((target_array-predict_array)**2).sum()/((target_array-target_mean)**2).sum()
         #??gradient 초기화시키고 다시 위로 올라가서 시작 #0으로 만들어주고 반복하게끔
-    
-    print(f"final : weight, bias, loss: {weight:.4f}, {bias:.4f}, {loss:.4f}")
-    print(f"acc : {acc:.4f}")
+        print(f"final : weight, bias, loss: {weight:.4f}, {bias:.4f}, {loss:.4f}")
+        print(f"acc : {acc:.4f}")
     return weight, bias, loss
     
 def get_data(): 
