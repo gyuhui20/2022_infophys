@@ -1,7 +1,11 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
 
+print("Step2: Development Multi Linear Regression Algorithm")
+
+# input_array will be 2-d array, target_array will be 1-d array(2입력1출력 다중선형회귀)
+#paramaters = weight, bias will be matrix
+#input_array1=RM, input_array2=CRIM, target_array=MEDV, predict_array=예측한 출력값
 
 def linear_regression_2D(input_array, target_array, epoch):
     weight, bias = np.zeros(shape=(2,1)), np.zeros(shape=(506,1))
@@ -9,7 +13,8 @@ def linear_regression_2D(input_array, target_array, epoch):
     weight_list, bias_list = [[], []], []
     grad_weight_list, grad_bias_list = [[], []], []
     lr = 1e-6
-
+    print(f"initial : weight1, weight2, bias : {weight[0,0]:.4f}, {weight[1,0]:.4f}, {bias[0,0]:.4f}")
+    
     for i in range(0, epoch):
         predict_array = predict(input_array, weight, bias)
         diff_array = predict_array - target_array
@@ -30,15 +35,21 @@ def linear_regression_2D(input_array, target_array, epoch):
         grad_bias_list.append(gradient_bias)
 
         loss_list.append(loss)
-
     weight_arr = np.array(weight_list)
     bias_arr = np.array(bias_list)
-
+    
     grad_weight_arr = np.array(grad_weight_list)
     grad_bias_arr = np.array(grad_bias_list)
 
     loss_arr = np.array(loss_list)
-
+    
+    print(f"final : weight1, weight2, bias, loss: {weight_arr[0, -1]:.4f}, {weight_arr[1, -1]:.4f}, {bias_arr[-1]:.4f}, {loss_arr[-1]:.4f}")
+    
+    #accuracy(R^2 결정계수)
+    #target_mean=target_array.mean()
+    #acc=1-((target_array-predict_array)**2).sum()/((target_array-target_mean)**2).sum()
+    #print("accuracy :", round(acc,4))
+    
     return weight_arr, bias_arr, loss_arr, grad_weight_arr, grad_bias_arr
     
 def get_data(): 
@@ -69,20 +80,20 @@ def lossfunction(diff_array):
 
 if __name__ == "__main__":
     input_arr, target_arr = get_data()
-    epoch = 500
+    epoch = 80
     weight_arr, bias_arr, loss_arr, grad_weight_arr, grad_bias_arr = linear_regression_2D(input_arr, target_arr, epoch)
-
-
+    #print(grad_weight_arr[0, -1])
+    #print(grad_weight_arr[1,-1])
     plt.figure()
     plt.subplot(2, 1, 1)
     plt.plot(input_arr[:,0], target_arr, ".", label="target")
-    plt.plot(input_arr[:,0], predict(input_arr, weight_arr[:, -1], bias_arr[-1]), ".", label="predict")
+    plt.plot(input_arr[:,0], (input_arr[:,0]*weight_arr[0, -1]), ".", label="predict")
     plt.legend()
     plt.title("x: Room, y: Price")
     
     plt.subplot(2, 1, 2)
     plt.plot(input_arr[:,1], target_arr, ".", label="target")
-    plt.plot(input_arr[:,1], predict(input_arr, weight_arr[:, -1], bias_arr[-1]), ".", label="predict")
+    plt.plot(input_arr[:,1], (input_arr[:,1]*weight_arr[1, -1]), ".", label="predict")
     plt.legend()
     plt.title("x: Criminal, y: Price")
 
