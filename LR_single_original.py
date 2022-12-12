@@ -9,7 +9,7 @@ print("Step1: Development Single Linear Regression Algorithm")
 def linear_regression_1D(input_array, target_array, epoch):
     weight, bias = 1,1
     loss_list = []
-    lr = 1e-4
+    lr = 1e-3
     print(f"initial : weight, bias : {weight}, {bias}")
     
     for i in range(0, epoch):
@@ -60,7 +60,7 @@ def lossfunction(diff_array):
 #__name__ : interpreter 글로벌 변수 
 if __name__ == "__main__": #인터프리터에서 직접 실행했을 경우에만 if문을 실행해라(import 말고)
     number_of_rooms, prices = get_data()
-    epoch = 100000
+    epoch = 1000000
     weight, bias, loss_arr = linear_regression_1D(number_of_rooms, prices, epoch)
     #draw result graph
     plt.plot(number_of_rooms, prices, ".", label="target")
